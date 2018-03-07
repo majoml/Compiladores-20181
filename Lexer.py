@@ -73,22 +73,28 @@ def cuentalinea(fileName):
         cont=cont+1
     return cont
 
+def progbar(curr,total,full_progbar):
+    frac=curr/total
+    filled_progbar=round(frac*full_progbar)
+    print('\r','#' * filled_progbar + '-' * (full_progbar-filled_progbar), '[{:>7.2%}]' . format(frac), end='')
+
 
 fileName='prueba.mj'
 fp=codecs.open(fileName, 'r')
+i=1
 file_text = fp.read()
 analizador = lex.lex()
 analizador.input(file_text)
+acum=cuentalinea(fileName)
 while True:
     tok = analizador.token()
     if not tok:
         break
     else:
         print(tok)
+        print(progbar(i, acum,20))
+        i=i+1
 fp.close()
-
-acum=cuentalinea(fileName)
-print(acum)
 
 
 
